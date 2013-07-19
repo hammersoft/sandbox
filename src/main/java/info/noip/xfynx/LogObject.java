@@ -10,30 +10,20 @@ import java.util.List;
  * @author xfynx
  */
 
-<<<<<<< HEAD
 /**
  * @see LogObject объект, который, при вызове конструктора с путём лог-файла,
  *      автоматически парсит его в структуру List<LogString>
  */
-=======
->>>>>>> origin/xfynx
 public class LogObject {
 
     public List<LogString> logInformation = new LinkedList<>();
     private List<String> result = new LinkedList<>();
 
     public LogObject(String fileName) {
-<<<<<<< HEAD
         this.logInformation = read(fileName);
     }
 
     private List<LogString> parse(List<LogString> logInformation) {
-=======
-        this.logInformation = reader(fileName);
-    }
-
-    private List<LogString> parser(List<LogString> logInformation) {
->>>>>>> origin/xfynx
         LogString parsingString = new LogString();
         String[] splitLogString;
         for (String s : this.result) {
@@ -50,11 +40,7 @@ public class LogObject {
         return logInformation;
     }
 
-<<<<<<< HEAD
     private List<LogString> read(String fileName) {
-=======
-    public List<LogString> reader(String fileName) {
->>>>>>> origin/xfynx
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             String s;
@@ -65,11 +51,7 @@ public class LogObject {
         } catch (IOException e) {
             System.out.printf("File %s not found.%n", fileName);
         }
-<<<<<<< HEAD
         return parse(logInformation);
-=======
-        return parser(logInformation);
->>>>>>> origin/xfynx
     }
 
     public void showParsed() {

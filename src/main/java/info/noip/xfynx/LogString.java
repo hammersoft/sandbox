@@ -3,14 +3,11 @@ package info.noip.xfynx;
 /**
  * @author xfynx
  */
-<<<<<<< HEAD
 
 /**
  * @see LogString объект, поля соответствуют значениям столбцов в лог-файле. Для полного разобранного лога следует
  *      использовать List<LogString>
  */
-=======
->>>>>>> origin/xfynx
 public class LogString {
     public long rawDate;
     public long countryCode;
