@@ -3,11 +3,11 @@ package info.noip.xfynx;
 public class App {
     private static void help() {
         System.out.println("use this keys:");
-        System.out.println("-sort: sorting file names of logs");
-        System.out.println("-scCnt: statistic by shows and clicks by SiteId and Date");
-        System.out.println("-usrCnt: count of users by SiteId");
-        System.out.println("-vstCnt: count of visits by User");
-        System.out.println("-frqDct: frequency dictionary of visits by User");
+        System.out.println("-sort: sorting file names of logs;");
+        System.out.println("-sccnt: statistic by shows and clicks by SiteId and Date;");
+        System.out.println("-usrcnt: count of users by SiteId;");
+        System.out.println("-vstcnt: count of visits by User;");
+        System.out.println("-frqdct: frequency dictionary of visits by User;");
         System.out.println("-help: show this info.");
     }
 
@@ -19,19 +19,19 @@ public class App {
                 case "-sort":
                     System.out.println("-sort: sorting file names of logs");
                     break;
-                case "-scCnt":
-                    System.out.println("-scCnt: statistic by shows and clicks by SiteId and Date");
-                    LogReader logReader = new LogReader("log.txt");
-                    logReader.out();
+                case "-sccnt":
+                    System.out.println("-sccnt: statistic by shows and clicks by SiteId and Date");
+                    LogObject logObject = new LogObject("log.txt");
+                    logObject.showParsed();
                     break;
-                case "-usrCnt":
-                    System.out.println("-usrCnt: count of users by SiteId");
+                case "-usrcnt":
+                    System.out.println("-usrcnt: count of users by SiteId");
                     break;
-                case "-vstCnt":
-                    System.out.println("-vstCnt: count of visits by User");
+                case "-vstcnt":
+                    System.out.println("-vstcnt: count of visits by User");
                     break;
-                case "-frqDct":
-                    System.out.println("-frqDct: frequency dictionary of visits by User");
+                case "-frqdct":
+                    System.out.println("-frqdct: frequency dictionary of visits by User");
                     break;
                 case "-help":
                     help();
@@ -40,6 +40,8 @@ public class App {
                     help();
                     break;
             }
-        //LogReader logReader = new LogReader("d:/sandbox/log.txt");
+        //LogObject logObject = new LogObject("log.txt");
+        //logObject.showParsed();
+        //logObject.logInformation.get(i).event;   типа как-то так использовать в итоге
     }
 }
