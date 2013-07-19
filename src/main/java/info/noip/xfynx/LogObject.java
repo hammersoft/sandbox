@@ -37,21 +37,17 @@ public class LogObject {
             parsingString.userId = Long.valueOf(splitLogString[2]);
             parsingString.siteId = Long.valueOf(splitLogString[3]);
             parsingString.event = splitLogString[4];
-            //LogString temp = new LogString();        //сей костыль пришлось применить из-за того, что в добавлении
-            //temp.copy(parsingString);                //в logInformation ссылка на каждый элемент parser менялась,
-            logInformation.add(parsingString);                //что, в итоге, давала все элементы списка, равные последнему в файле.
+            logInformation.add(parsingString);
         }
         return logInformation;
     }
 
     private List<LogString> read(String fileName) {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             String s;
             while ((s = bufferedReader.readLine()) != null) {
                 this.result.add(s);
             }
-            bufferedReader.close();
         } catch (IOException e) {
             System.out.printf("File %s not found.%n", fileName);
         }
@@ -59,11 +55,9 @@ public class LogObject {
     }
 
     public void showParsed() {
-        int i = 0;
         for (LogString logString : logInformation) {
             System.out.println(logString.toString());
-            i++;
         }
-        System.out.println(i);
+        System.out.println(logInformation.size());
     }
 }
