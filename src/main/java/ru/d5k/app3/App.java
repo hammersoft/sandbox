@@ -10,5 +10,7 @@ public class App
     {
         String s = "world";
         System.out.printf( "Hello, %s !", s);
+        String s1 = "Просто переменная";
+        String s2 = "Еще одна переменная";
     }
 }
