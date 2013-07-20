@@ -35,7 +35,11 @@ public class LogObject {
             parsingString.countryCode = Long.valueOf(splitLogString[1]);
             parsingString.userId = Long.valueOf(splitLogString[2]);
             parsingString.siteId = Long.valueOf(splitLogString[3]);
-            parsingString.event = splitLogString[4];
+            //parsingString.event = splitLogString[4];
+            if (splitLogString[4].matches("click"))
+                parsingString.event.click++;
+            else
+                parsingString.event.show++;
             logInformation.add(parsingString);
         }
         return logInformation;

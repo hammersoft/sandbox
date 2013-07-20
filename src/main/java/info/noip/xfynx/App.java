@@ -1,8 +1,5 @@
 package info.noip.xfynx;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 public class App {
     private static void help() {
         System.out.println("use this keys:");
@@ -48,10 +45,19 @@ public class App {
 
         LogObject logObject = new LogObject("log.txt");
         logObject.showParsed();
-        HashMap<Long, LogString> hashedLogObject = new LinkedHashMap<>(logObject.logInformation.size());
-        for (LogString ls : logObject.logInformation) {
-            hashedLogObject.put(ls.siteId, ls);
-        }
-        System.out.println(hashedLogObject.toString());
+//        HashMap<Long, LogString> hashedLogObject = new LinkedHashMap<>(logObject.logInformation.size());
+//        for (LogString ls : logObject.logInformation) {
+//            hashedLogObject.put(ls.siteId, ls);
+//        }
+//        System.out.println(hashedLogObject.toString());
+
+//        LinkedHashMap<String,LogString> hashedLogObject = new LinkedHashMap<>(logObject.logInformation.size());
+//        for (LogString ls : logObject.logInformation) {
+//            if(hashedLogObject.containsKey(ls.keyStatEvent()))
+//                hashedLogObject.get(ls.keyStatEvent()).event
+//            hashedLogObject.put(ls.keyStatEvent(), ls);
+//        }
+//        hashedLogObject.
+//        System.out.println(hashedLogObject.toString());
     }
 }
