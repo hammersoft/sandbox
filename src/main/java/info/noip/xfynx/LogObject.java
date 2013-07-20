@@ -31,9 +31,8 @@ public class LogObject {
             LogString parsingString = new LogString();
             parsingString.gregorianCalendar = new GregorianCalendar();
             splitLogString = s.split("\t");
-            Date tempDate = new Date(Long.valueOf(splitLogString[0]));    //Штуки вида Long.valueOf(splitLogString[0])-
-            parsingString.gregorianCalendar.setTime(tempDate);            //преобразование из элемента String-массива
-            parsingString.countryCode = Long.valueOf(splitLogString[1]);  //в Long и дальнейшее использование
+            parsingString.gregorianCalendar.setTime(new Date(Long.valueOf(splitLogString[0])));
+            parsingString.countryCode = Long.valueOf(splitLogString[1]);
             parsingString.userId = Long.valueOf(splitLogString[2]);
             parsingString.siteId = Long.valueOf(splitLogString[3]);
             parsingString.event = splitLogString[4];
