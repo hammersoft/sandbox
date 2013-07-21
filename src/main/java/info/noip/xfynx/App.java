@@ -1,5 +1,8 @@
 package info.noip.xfynx;
 
+import java.util.Date;
+import java.util.HashMap;
+
 public class App {
     private static void help() {
         System.out.println("use this keys:");
@@ -44,20 +47,28 @@ public class App {
         //logObject.logInformation.get(i).event;   типа как-то так использовать в итоге
 
         LogObject logObject = new LogObject("log.txt");
-        logObject.showParsed();
-//        HashMap<Long, LogString> hashedLogObject = new LinkedHashMap<>(logObject.logInformation.size());
-//        for (LogString ls : logObject.logInformation) {
-//            hashedLogObject.put(ls.siteId, ls);
-//        }
-//        System.out.println(hashedLogObject.toString());
+        //logObject.showParsed();
 
-//        LinkedHashMap<String,LogString> hashedLogObject = new LinkedHashMap<>(logObject.logInformation.size());
-//        for (LogString ls : logObject.logInformation) {
-//            if(hashedLogObject.containsKey(ls.keyStatEvent()))
-//                hashedLogObject.get(ls.keyStatEvent()).event
-//            hashedLogObject.put(ls.keyStatEvent(), ls);
-//        }
-//        hashedLogObject.
-//        System.out.println(hashedLogObject.toString());
+        class KeyByDateCodeSite {
+            Date date;
+            long countryCode;
+            long siteId;
+
+            KeyByDateCodeSite(Date date, long countryCode, long siteId) {
+                this.date = date;
+                this.countryCode = countryCode;
+                this.siteId = siteId;
+            }
+        }
+
+        HashMap<KeyByDateCodeSite, LogString.Event> hashMap = new HashMap<KeyByDateCodeSite, LogString.Event>();
+        for (LogString ls : logObject.logInformation) {
+            KeyByDateCodeSite key = new KeyByDateCodeSite(
+                    ls.gregorianCalendar.getTime(), ls.countryCode, ls.siteId);
+            hashMap.put(key, ls.event);
+        }
+        //System.out.println(hashMap.toString());
+        //System.out.println(hashMap.size());
+
     }
 }
