@@ -35,9 +35,7 @@ class Parser {
                 e.printStackTrace();
         }
 
-        /*for (Record item : listOfLogs) {
-            System.out.println(item.date + " " + item.countryCode + " " +item.userId+" "+item.siteId+" "+ item.type);
-        }*/
+
         return listOfLogs;
     }
 
