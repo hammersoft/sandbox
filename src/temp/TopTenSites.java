@@ -53,26 +53,28 @@ class TopTenSites {
         }*/
 
         //int ii=0;
-        for(int i=0; i<listOfLogsReduced.size()-1; i++){
-            List <Long> sites = new ArrayList <Long>();
+        //*********************************************
+        for(int i=0; i<listOfLogsReduced.size()-1; i++) {
+            List <Long> sites = new ArrayList <Long>();         //сайты в отдельно взятой стране
 
-            while (listOfLogsReduced.get(i).countryCode == listOfLogsReduced.get(i+1).countryCode){
+            while (listOfLogsReduced.get(i).countryCode.equals(listOfLogsReduced.get(i+1).countryCode)){
                 sites.add(listOfLogsReduced.get(i).siteId);
-                i++;
+                //System.out.println(i);
+                if (i<listOfLogsReduced.size()-2) {i++;} else {break;}
             }
 
-           /* for(Long site: sites){
-                System.out.println(site + " " + ii + " " + i);
-                ii++;
-            }*/
+            //for(Long site: sites){
+               // System.out.println(site + " " + ii + " " + i);
+               // ii++;
+              //  System.out.println("Site Size: "+sites.size());
+            //}
+        //********************************************
 
             System.out.println("Country: " + listOfLogsReduced.get(i).countryCode);
 
             Map<Long, Long> dictionaryOfSites = new HashMap<Long, Long>();
             ValueComparator bvc =  new ValueComparator(dictionaryOfSites);
             TreeMap<Long,Long> dictionaryOfSitesSorted = new TreeMap<Long,Long>(bvc);
-
-
 
             for (Long site : sites){
                 if (!sites.isEmpty())
@@ -84,18 +86,13 @@ class TopTenSites {
 
             dictionaryOfSitesSorted.putAll(dictionaryOfSites);
 
-
-            int j = 0;
+            int countOfSites = 0;
             for (Long key : dictionaryOfSitesSorted.keySet())
-                if (j<10) {
+                if (countOfSites < 10) {
                     System.out.println (key + ": " + dictionaryOfSites.get(key));
-                    j++;
+                    countOfSites ++;
                 } else {break;}
             }
-
-
-
-
 
     }
 }
