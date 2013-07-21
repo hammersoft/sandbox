@@ -61,7 +61,7 @@ class TopTenSites {
                         dictionaryOfSites.put(site, dictionaryOfSites.get(site) + 1);
             }
 
-            for (Long hey : dictionaryOfSites.keySet())
+            for (Long key : dictionaryOfSites.keySet())
                 System.out.println (key + ": " + dictionaryOfSites.get(key));
             }
 
