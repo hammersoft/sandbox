@@ -1,7 +1,9 @@
 package info.noip.xfynx;
 
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class App {
     private static void help() {
@@ -49,26 +51,22 @@ public class App {
         LogObject logObject = new LogObject("log.txt");
         //logObject.showParsed();
 
-        class KeyByDateCodeSite {
-            Date date;
-            long countryCode;
-            long siteId;
-
-            KeyByDateCodeSite(Date date, long countryCode, long siteId) {
-                this.date = date;
-                this.countryCode = countryCode;
-                this.siteId = siteId;
-            }
-        }
-
         HashMap<KeyByDateCodeSite, LogString.Event> hashMap = new HashMap<KeyByDateCodeSite, LogString.Event>();
         for (LogString ls : logObject.logInformation) {
             KeyByDateCodeSite key = new KeyByDateCodeSite(
                     ls.gregorianCalendar.getTime(), ls.countryCode, ls.siteId);
+
             hashMap.put(key, ls.event);
         }
-        //System.out.println(hashMap.toString());
-        //System.out.println(hashMap.size());
+
+        TreeMap sortedMap = new TreeMap(new KeyByDateCodeSiteSort());
+        sortedMap.putAll(hashMap);
+
+        Iterator i = sortedMap.entrySet().iterator();
+        for (int j = 1; i.hasNext(); j++) {
+            Map.Entry me = (Map.Entry) i.next();
+            System.out.println(me.getKey() + " " + me.getValue());
+        }
 
     }
 }
