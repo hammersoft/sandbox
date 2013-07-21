@@ -10,6 +10,23 @@ class TopTenSites {
 
     }
 
+    static class ValueComparator implements Comparator<Long> {
+
+        Map<Long, Long> base;
+        public ValueComparator(Map<Long, Long> base) {
+            this.base = base;
+        }
+
+
+        public int compare(Long a, Long b) {
+            if (base.get(a) >= base.get(b)) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         List<Record> listOfLogs = new ArrayList<Record>();
         listOfLogs = Parser.readFile();
@@ -35,7 +52,7 @@ class TopTenSites {
 
         }*/
 
-        int ii=0;
+        //int ii=0;
         for(int i=0; i<listOfLogsReduced.size()-1; i++){
             List <Long> sites = new ArrayList <Long>();
 
@@ -52,6 +69,10 @@ class TopTenSites {
             System.out.println("Country: " + listOfLogsReduced.get(i).countryCode);
 
             Map<Long, Long> dictionaryOfSites = new HashMap<Long, Long>();
+            ValueComparator bvc =  new ValueComparator(dictionaryOfSites);
+            TreeMap<Long,Long> dictionaryOfSitesSorted = new TreeMap<Long,Long>(bvc);
+
+
 
             for (Long site : sites){
                 if (!sites.isEmpty())
@@ -61,8 +82,15 @@ class TopTenSites {
                         dictionaryOfSites.put(site, dictionaryOfSites.get(site) + 1);
             }
 
-            for (Long key : dictionaryOfSites.keySet())
-                System.out.println (key + ": " + dictionaryOfSites.get(key));
+            dictionaryOfSitesSorted.putAll(dictionaryOfSites);
+
+
+            int j = 0;
+            for (Long key : dictionaryOfSitesSorted.keySet())
+                if (j<10) {
+                    System.out.println (key + ": " + dictionaryOfSites.get(key));
+                    j++;
+                } else {break;}
             }
 
 
