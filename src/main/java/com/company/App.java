@@ -1,7 +1,6 @@
 package main.java.com.company;
 
 /**
- * Hello world!
  *
  */
 public class App 
@@ -13,15 +12,17 @@ public class App
 		for (String CLArgument : args) {
 			     if(CLArgument.equals("-help")) {
 					 help();
-					 help();
+				 }else if(CLArgument.equals("-cllickAndShowsStat")) {
+					  LogParser logParser=new LogParser("C:\\Users\\WOLFY\\Desktop\\test.log");
 				 }else{
 					help();
 					return;
 				 }
 			}
-		// System.out.println( "Hello World!" );
     }
 	private static void help(){
 		System.out.println("Command line options");
+		System.out.println("'-help' to show this help");
+		System.out.println("'-cllickAndShowsStat' to show statistics I2");
 	}
 }
