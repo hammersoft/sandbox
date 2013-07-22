@@ -1,9 +1,6 @@
 package main.java.com.company;
 import java.io.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 import main.java.com.company.dataContainer.*;
 
@@ -16,59 +13,51 @@ public class LogParser {
 	public LogParser(String logFile){
 		try{
 			instream=new BufferedReader(new FileReader(logFile));
-			String readedLine;
-			readedLine=instream.readLine();
+			String nextLine;
+			nextLine=instream.readLine();
 			int counter=0;
-			//Date date =new Date();
-			//Calendar calendar=Calendar.getInstance();
-			HashMap<String,Counters> parsedLog=new HashMap<String, Counters>();
-			String HashKey;
-			//System.out.println(ParsedLog.get("fr"));
-			SitesLogUnitContainer LogContainer=null;
-			LinkedList<String> linkList=new LinkedList<String>();
-			while((readedLine=instream.readLine())!=null){
-				LogContainer=StringParse(readedLine);
-				HashKey= LogContainer.getDateCodeIdString();
-				Counters gettedCounter=parsedLog.get(HashKey);
-				if(gettedCounter==null){
-					parsedLog.put(HashKey,new Counters());
-					linkList.push(HashKey);
-					gettedCounter=parsedLog.get(HashKey);
+			HashMap<String,Counters> parsingResult = new HashMap<String, Counters>();
+			String hashKey;
+			SitesLogUnitContainer logContainer;
+			LinkedList<String> hashMapKeys=new LinkedList<String>();
+			while((nextLine=instream.readLine())!=null){
+				logContainer = stringParse(nextLine);
+				hashKey = logContainer.getHashMapKey();
+				Counters counterToIncrease = parsingResult.get(hashKey);
+				if(counterToIncrease==null){
+					parsingResult.put(hashKey,new Counters( logContainer.getFormatedDate() ));
+					counterToIncrease=parsingResult.get(hashKey);
+					hashMapKeys.push(hashKey);
 					counter++;
-				};
-				//System.out.println(gettedCounter.toString());
-				if(LogContainer.type.equals("click")){
-					gettedCounter.IncreaseClickCnt();
-				}else if(LogContainer.type.equals("show")){
-					gettedCounter.IncreaseShowCnt();
+				}
+				if(logContainer.getType().equals("click")){
+					counterToIncrease.increaseClickCount();
+				}else if(logContainer.getType().equals("show")){
+					counterToIncrease.increaseShowCount();
 				}
 			}
 			for(int i=0;i<counter;i++){
-				String HMapKey= linkList.pop();
-				Counters gettedCounter=parsedLog.get(HMapKey) ;
-				System.out.println(HMapKey.toString()+" "+gettedCounter.showCnt+" "+gettedCounter.clickCnt);
+				String hashMapKey= hashMapKeys.pop();
+				Counters counterToDisplay=parsingResult.get(hashMapKey) ;
+				System.out.println(counterToDisplay.getExtraData() + " " + counterToDisplay.getShowCnt() + " " + counterToDisplay.getClickCount());
 			}
 			System.out.println(counter+" lines in statistics");
-		}catch(Exception e){
-			System.out.println(e.toString());
+			instream.close();
+		} catch (FileNotFoundException e){
 			System.out.println("Not found file "+logFile);
-		}
-	}
-	private long toLong(String string){
-		 return Long.valueOf(string);
-	}
-	private SitesLogUnitContainer StringParse(String readString){
-		String[] readData =readString.split("\t");
-		//System.out.println(readData[1]);
-		SitesLogUnitContainer DataContainer=null;
-		//DataContainer = new SitesLogUnitContainer();
-		try{
-			//System.out.println( toLong(readData[0]));
-		DataContainer = new SitesLogUnitContainer(toLong(readData[0]),
-				toLong(readData[1]),toLong(readData[2]),toLong(readData[3]),readData[4]);
-		}catch(Exception e){
+		} catch (Exception e){
 			System.out.println(e.toString());
 		}
-		return  DataContainer;
+	}
+	private SitesLogUnitContainer stringParse(String readString){
+		String[] dataStrings =readString.split("\t");
+		SitesLogUnitContainer dataContainer;
+		try{
+			dataContainer = new SitesLogUnitContainer(Long.valueOf(dataStrings[0]),Long.valueOf(dataStrings[1]),Long.valueOf(dataStrings[2]),Long.valueOf(dataStrings[3]),dataStrings[4]);
+		}catch(Exception e){
+			System.out.println(e.toString());
+			dataContainer = new SitesLogUnitContainer(0,0,0,0,"Err");
+		}
+		return  dataContainer;
 	}
 }

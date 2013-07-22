@@ -1,37 +1,54 @@
 package main.java.com.company.dataContainer;
 
+import java.text.FieldPosition;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
  * User: WOLFY
  */
 public class SitesLogUnitContainer {
-	public long date;
-	public long countryCode;
-	public long userId;
-	public long siteId;
-	public String type;
-	private String DdMmYyyyDate;
-	private String DdMmYyyyDateWithoutPoints;
-	private static Calendar calendar=Calendar.getInstance();
-	public SitesLogUnitContainer(){
+	private long date;
+	private long countryCode;
+	private long userId;
+	private long siteId;
+	private String type;
+	private String formatedDate;
+	private String formatedHashMapKey;
 
-	}
+	/*
+	public int typeID;
+	public static final int SHOW=0;
+	public static final int CLICK=1;
+	SitesLogUnitContainer className.type=SitesLogUnitContainer.SHOW;    */
+
 	public SitesLogUnitContainer(long date,long countryCode,long userId,long siteId,String type){
 		this.date=date;
 		this.countryCode=countryCode;
 		this.userId=userId;
 		this.siteId=siteId;
 		this.type=type;
-		calendar.setTimeInMillis(date);
-		DdMmYyyyDate= new String(calendar.get(Calendar.DAY_OF_MONTH)+"."+calendar.get(Calendar.MONTH)+"."+calendar.get(Calendar.YEAR));
-		DdMmYyyyDateWithoutPoints= new String(calendar.get(Calendar.DAY_OF_MONTH)+""+calendar.get(Calendar.MONTH)+calendar.get(Calendar.YEAR));
+
+		Date dateClass = new Date(date);
+		SimpleDateFormat formatter=new SimpleDateFormat("dd.MM.yyyy");
+		formatedDate = formatter.format(dateClass);
+
+		StringBuffer hashMapKey=new StringBuffer();
+		SimpleDateFormat hashMapKeyGenerator=new SimpleDateFormat("ddMMyyyy");
+		hashMapKey=hashMapKeyGenerator.format(dateClass,hashMapKey,new FieldPosition(0));
+		hashMapKey.append(this.countryCode);
+		hashMapKey.append(this.siteId);
+		formatedHashMapKey = hashMapKey.toString();
 	}
-	public String getDdMmYyyyDate(){
-		return DdMmYyyyDate;
+	public String getFormatedDate(){
+		return formatedDate;
 	}
-	public String getDateCodeIdString(){
-		return DdMmYyyyDateWithoutPoints+this.countryCode+this.siteId;
+	public String getHashMapKey(){
+		return formatedHashMapKey;
+	}
+	public String getType() {
+		return type;
 	}
 }

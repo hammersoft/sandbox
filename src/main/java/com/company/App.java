@@ -13,7 +13,7 @@ public class App
 			     if(CLArgument.equals("-help")) {
 					 help();
 				 }else if(CLArgument.equals("-clickAndShowsStat")) {
-					  LogParser logParser=new LogParser("C:\\Users\\WOLFY\\Desktop\\test.log");
+					  LogParser logParser=new LogParser("test.log");
 				 }else{
 					help();
 					return;
@@ -23,6 +23,6 @@ public class App
 	private static void help(){
 		System.out.println("Command line options");
 		System.out.println("'-help' to show this help");
-		System.out.println("'-cllickAndShowsStat' to show statistics I2");
+		System.out.println("'-clickAndShowsStat' to show statistics I2");
 	}
 }

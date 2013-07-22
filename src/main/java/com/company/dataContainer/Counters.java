@@ -5,12 +5,26 @@ package main.java.com.company.dataContainer;
  * User: WOLFY
  */
 public class Counters {
-	public int showCnt=0;
-	public int clickCnt=0;
-	public void IncreaseShowCnt(){
-		this.showCnt++;
+	private int showCount=0;
+	private int clickCount=0;
+	private String extraData;
+
+	public Counters(String extraData){
+		this.extraData = extraData;
 	}
-	public void IncreaseClickCnt(){
-		this.clickCnt++;
+	public void increaseShowCount(){
+		this.showCount++;
+	}
+	public void increaseClickCount(){
+		this.clickCount++;
+	}
+	public int getShowCnt() {
+		return showCount;
+	}
+	public int getClickCount() {
+		return clickCount;
+	}
+	public String getExtraData() {
+		return extraData;
 	}
 }
