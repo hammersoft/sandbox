@@ -1,9 +1,6 @@
 package info.noip.xfynx;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class App {
     private static void help() {
@@ -51,22 +48,31 @@ public class App {
         LogObject logObject = new LogObject("log.txt");
         //logObject.showParsed();
 
-        HashMap<KeyByDateCodeSite, LogString.Event> hashMap = new HashMap<KeyByDateCodeSite, LogString.Event>();
-        for (LogString ls : logObject.logInformation) {
+        HashMap<KeyByDateCodeSite, Event> hashMap = new HashMap<KeyByDateCodeSite, Event>();
+
+        for (LogLine ls : logObject.logInformation) {
+            Event event = new Event(0, 0);
             KeyByDateCodeSite key = new KeyByDateCodeSite(
-                    ls.gregorianCalendar.getTime(), ls.countryCode, ls.siteId);
+                    ls.calendar, ls.countryCode, ls.siteId);
+            if (hashMap.containsKey(key)) {
+                event = hashMap.get(key);
+            }
+            event = event.setShowOrClick(ls, event);
+            hashMap.put(key, event);
 
-            hashMap.put(key, ls.event);
         }
-
-        TreeMap sortedMap = new TreeMap(new KeyByDateCodeSiteSort());
-        sortedMap.putAll(hashMap);
-
-        Iterator i = sortedMap.entrySet().iterator();
-        for (int j = 1; i.hasNext(); j++) {
-            Map.Entry me = (Map.Entry) i.next();
-            System.out.println(me.getKey() + " " + me.getValue());
-        }
+        System.out.println(hashMap.toString());
+//
+//        TreeMap sortedMap = new TreeMap(new KeyByDateCodeSiteSort());
+//        sortedMap.putAll(hashMap);
+//
+//        Iterator i = sortedMap.entrySet().iterator();
+//        for (int j = 1; i.hasNext(); j++) {
+//            Map.Entry me = (Map.Entry) i.next();
+//            System.out.println(me.getKey() + " " + me.getValue());
+//        }
 
     }
+
+
 }

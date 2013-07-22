@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -14,38 +13,40 @@ import java.util.List;
 
 /**
  * @see LogObject объект, который, при вызове конструктора с путём лог-файла,
- *      автоматически парсит его в структуру List<LogString>
+ *      автоматически парсит его в структуру List<LogLine>
  */
 public class LogObject {
 
-    public List<LogString> logInformation = new ArrayList<>();
+    public List<LogLine> logInformation = new ArrayList<>();
     private List<String> result = new ArrayList<>();
 
     public LogObject(String fileName) {
         this.logInformation = read(fileName);
     }
 
-    private List<LogString> parse(List<LogString> logInformation) {
+    private List<LogLine> parse(List<LogLine> logInformation) {
         String[] splitLogString;
         for (String s : this.result) {
-            LogString parsingString = new LogString();
-            parsingString.gregorianCalendar = new GregorianCalendar();
+            LogLine parsingString = new LogLine();
+            parsingString.date = new Date();
             splitLogString = s.split("\t");
-            parsingString.gregorianCalendar.setTime(new Date(Long.valueOf(splitLogString[0])));
+            parsingString.date.setTime(Long.valueOf(splitLogString[0]));
+
+            //parsingString.calendar.setTime(parsingString.date);
             parsingString.countryCode = Long.valueOf(splitLogString[1]);
             parsingString.userId = Long.valueOf(splitLogString[2]);
             parsingString.siteId = Long.valueOf(splitLogString[3]);
-            //parsingString.event = splitLogString[4];
-            if (splitLogString[4].matches("click"))
-                parsingString.event.click++;
-            else
-                parsingString.event.show++;
+            parsingString.event = splitLogString[4];
+//            if (splitLogString[4].matches("click"))
+//                parsingString.event.click++;
+//            else
+//                parsingString.event.show++;
             logInformation.add(parsingString);
         }
         return logInformation;
     }
 
-    private List<LogString> read(String fileName) {
+    private List<LogLine> read(String fileName) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             String s;
             while ((s = bufferedReader.readLine()) != null) {
@@ -58,8 +59,8 @@ public class LogObject {
     }
 
     public void showParsed() {
-        for (LogString logString : logInformation) {
-            System.out.println(logString.toString());
+        for (LogLine logLine : logInformation) {
+            System.out.println(logLine.toString());
         }
         System.out.println(logInformation.size());
     }
