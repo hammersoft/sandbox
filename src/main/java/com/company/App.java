@@ -12,7 +12,7 @@ public class App
 		for (String CLArgument : args) {
 			     if(CLArgument.equals("-help")) {
 					 help();
-				 }else if(CLArgument.equals("-cllickAndShowsStat")) {
+				 }else if(CLArgument.equals("-clickAndShowsStat")) {
 					  LogParser logParser=new LogParser("C:\\Users\\WOLFY\\Desktop\\test.log");
 				 }else{
 					help();
