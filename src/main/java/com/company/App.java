@@ -9,10 +9,12 @@ public class App
 		if(args.length==0){
 			help();
 		}
-		for (String CLArgument : args) {
-			     if(CLArgument.equals("-help")) {
+		for (String argument : args) {
+			     if(argument.equals("-help")||argument.equals("-h")) {
 					 help();
-				 }else if(CLArgument.equals("-clickAndShowsStat")) {
+				 }else if(argument.equals("-fileNamesSort")||argument.equals("-issue1")) {
+					 FileNameSorter issueClass=new FileNameSorter("socdem");
+				 }else if(argument.equals("-clickAndShowsStat")||argument.equals("-issue2")) {
 					  LogParser logParser=new LogParser("test.log");
 				 }else{
 					help();
@@ -22,7 +24,8 @@ public class App
     }
 	private static void help(){
 		System.out.println("Command line options");
-		System.out.println("'-help' to show this help");
-		System.out.println("'-clickAndShowsStat' to show statistics I2");
+		System.out.println("'-help' or '-h' to show this help");
+		System.out.println("'-fileNamesSort' or '-issue1' to show statistics I1");
+		System.out.println("'-clickAndShowsStat' or '-issue2' to show statistics I2");
 	}
 }
