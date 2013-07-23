@@ -23,7 +23,9 @@ public class SitesLogUnitContainer {
 	public static final int SHOW=0;
 	public static final int CLICK=1;
 	SitesLogUnitContainer className.type=SitesLogUnitContainer.SHOW;    */
-
+	public SitesLogUnitContainer(){
+		this(0,0,0,0,"Empty Container");
+	}
 	public SitesLogUnitContainer(long date,long countryCode,long userId,long siteId,String type){
 		this.date=date;
 		this.countryCode=countryCode;

@@ -53,10 +53,15 @@ public class LogParser {
 		String[] dataStrings =readString.split("\t");
 		SitesLogUnitContainer dataContainer;
 		try{
-			dataContainer = new SitesLogUnitContainer(Long.valueOf(dataStrings[0]),Long.valueOf(dataStrings[1]),Long.valueOf(dataStrings[2]),Long.valueOf(dataStrings[3]),dataStrings[4]);
+			long date= Long.valueOf(dataStrings[0]);
+			long countryCode = Long.valueOf(dataStrings[1]);
+			long userId = Long.valueOf(dataStrings[2]);
+			long siteId = Long.valueOf(dataStrings[3]);
+			String actionType= dataStrings[4];
+			dataContainer = new SitesLogUnitContainer(date,countryCode,userId,siteId,actionType);
 		}catch(Exception e){
 			System.out.println(e.toString());
-			dataContainer = new SitesLogUnitContainer(0,0,0,0,"Err");
+			dataContainer = new SitesLogUnitContainer();
 		}
 		return  dataContainer;
 	}
