@@ -5,9 +5,22 @@ import java.util.*;
 class TopTenSites {
 
     static class ReducedRecord{
-        Long countryCode;
-        Long siteId;
+        private Long countryCode;
+        private Long siteId;
 
+        Long getCountryCode() {
+            return countryCode;
+        }
+        void setCountryCode(Long countryCode) {
+            this.countryCode = countryCode;
+        }
+
+        Long getSiteId() {
+            return siteId;
+        }
+        void setSiteId(Long siteId) {
+            this.siteId = siteId;
+        }
     }
 
     static class ValueComparator implements Comparator<Long> {
@@ -16,7 +29,6 @@ class TopTenSites {
         public ValueComparator(Map<Long, Long> base) {
             this.base = base;
         }
-
 
         public int compare(Long a, Long b) {
             if (base.get(a) >= base.get(b)) {
@@ -29,14 +41,14 @@ class TopTenSites {
 
     public static void main(String[] args) {
         List<Record> listOfLogs = new ArrayList<Record>();
-        listOfLogs = Parser.readFile();
+        listOfLogs = Parse.parseFile();
 
         List<ReducedRecord> listOfLogsReduced = new ArrayList<ReducedRecord>();
 
         for (Record item : listOfLogs) {
             ReducedRecord tempRec = new ReducedRecord();
-            tempRec.countryCode = item.countryCode;
-            tempRec.siteId = item.siteId;
+            tempRec.countryCode = item.getCountryCode();
+            tempRec.siteId = item.getSiteId();
             listOfLogsReduced.add(tempRec);
         }
 
@@ -54,13 +66,12 @@ class TopTenSites {
 
         //int ii=0;
         //*********************************************
-        for(int i=0; i<listOfLogsReduced.size()-1; i++) {
+        for(int i=0; i<listOfLogsReduced.size()-1; i++) {       //чудо-цикл, который вскоре будет переписан
             List <Long> sites = new ArrayList <Long>();         //сайты в отдельно взятой стране
 
             while (listOfLogsReduced.get(i).countryCode.equals(listOfLogsReduced.get(i+1).countryCode)){
                 sites.add(listOfLogsReduced.get(i).siteId);
-                //System.out.println(i);
-                if (i<listOfLogsReduced.size()-2) {i++;} else {break;}
+                if (i<listOfLogsReduced.size()-2 ) {i++;} else {break;}
             }
 
             //for(Long site: sites){
@@ -72,27 +83,29 @@ class TopTenSites {
 
             System.out.println("Country: " + listOfLogsReduced.get(i).countryCode);
 
-            Map<Long, Long> dictionaryOfSites = new HashMap<Long, Long>();
-            ValueComparator bvc =  new ValueComparator(dictionaryOfSites);
-            TreeMap<Long,Long> dictionaryOfSitesSorted = new TreeMap<Long,Long>(bvc);
+            Map<Long, Long> mapOfSites = new HashMap<Long, Long>();
+            ValueComparator bvc =  new ValueComparator(mapOfSites);
+            TreeMap<Long,Long> mapOfSitesSorted = new TreeMap<Long,Long>(bvc);
 
             for (Long site : sites){
-                if (!sites.isEmpty())
-                    if (!dictionaryOfSites.containsKey(site))
-                        dictionaryOfSites.put(site, 1L);
-                    else
-                        dictionaryOfSites.put(site, dictionaryOfSites.get(site) + 1);
+                if (!sites.isEmpty()){
+                    if (!mapOfSites.containsKey(site)){
+                        mapOfSites.put(site, 1L);
+                    } else {
+                        mapOfSites.put(site, mapOfSites.get(site) + 1);
+                    }
+                }
             }
 
-            dictionaryOfSitesSorted.putAll(dictionaryOfSites);
+            mapOfSitesSorted.putAll(mapOfSites);
 
             int countOfSites = 0;
-            for (Long key : dictionaryOfSitesSorted.keySet())
+            for (Long key : mapOfSitesSorted.keySet())
                 if (countOfSites < 10) {
-                    System.out.println (key + ": " + dictionaryOfSites.get(key));
+                    System.out.println(key + ": " + mapOfSites.get(key));
                     countOfSites ++;
                 } else {break;}
             }
-
+            // hashmap <Long, TreeMap<Long, Long>>
     }
 }
